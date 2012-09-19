@@ -1,0 +1,67 @@
+{
+"name":"main_grid",
+"type":"grid",
+"row_defs":[-1,-1,-1],
+"column_defs":[-1,-1,-1],
+
+"children":[
+	{
+		"name":"lbl",
+		"type":"label",
+		"caption":"<bold=true>Hello</>",
+		"r":0,
+		"c":1,
+		"background":[255,0,0],
+		"typeface":{
+			"name":"Sans",
+			"size":20
+		},
+		"visible":true,
+		"format":true,
+		"column_span":4
+
+
+
+	},
+	{
+		"name":"progress1",
+		"type":"progress",
+		"r":2,
+		"c":2,
+		"row_span":1,
+		"vmax":100,
+		"value":10,
+		"height":20
+	},
+	{
+		"name":"sub_grid",
+		"type":"grid",
+		"row_defs":[-1,-1,-1],
+		"column_defs":[-1,-1,-1],
+		"r":1,
+		"c":1,
+		"children":[
+			{
+				"name":"btn",
+				"type":"button",
+				"caption":"Quit",
+				"r":0,
+				"c":1
+
+			}
+
+
+		]
+
+
+
+	}
+
+
+
+]
+
+
+
+
+}
