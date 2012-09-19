@@ -72,28 +72,29 @@ COMMON FIELDS
 GRID FIELDS
 "row_def"/"column_defs" - A JSON array of integers. similar to XAML row and column defs. An array of integers - on for each row/column
 
-						 If the value is positive, such a 300 - then it gives the absolute size of the object
-						 If the value is negative, such as -1, then it is similar the Star sizing in XAML
-						 -1 is equivalent to 1*, -2 to 2* and so on
-						 Like star sizing, this divides up the remaining space proportianately. For example
-						 you have "row_defs":[100,-1,-6,-2] and the grid height is 1000
-						 the first row (Row 0) would have height 100
-						 The rest of the rows are "star" sizing rows.
-						 The remaining space is 900 (1000 - 100 for the first row)
-						 The remaining numbers total -9. Thus each -1 is equal to 900/9 = 100
-						 The second row is 100
-						 The third row is 600
-						 the fourth row is 200
+	If the value is positive, such a 300 - then it gives the absolute size of the object
+	If the value is negative, such as -1, then it is similar the Star sizing in XAML
+	-1 is equivalent to 1*, -2 to 2* and so on
+	Like star sizing, this divides up the remaining space proportianately. 
 
-						 Let us say the grid then gets resized to 1900
-						 The first row is 100 since that is fixed
-						 The available size is 1800
-						 The remaining negative numbers are still -9
-						 The each -1 is now equal to 200
-						 The first row (Row 0) remains 100
-						 the second row is 200
-						 The third row is 1200
-						 The fourth row is 400
+	For example you have "row_defs":[100,-1,-6,-2] and the grid height is 1000
+	the first row (Row 0) would have height 100
+	The rest of the rows are "star" sizing rows.
+	The remaining space is 900 (1000 - 100 for the first row)
+	The remaining numbers total -9. Thus each -1 is equal to 900/9 = 100
+	The second row is 100
+	The third row is 600
+	the fourth row is 200
+
+	Let us say the grid then gets resized to 1900
+	The first row is 100 since that is fixed
+	The available size is 1800
+	The remaining negative numbers are still -9
+	The each -1 is now equal to 200
+	The first row (Row 0) remains 100
+	The second row is 200
+	The third row is 1200
+	The fourth row is 400
 
 "children" - An array of objects. The name and type of the objects are as specified above
 
