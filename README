@@ -1,0 +1,195 @@
+
+Nana GUI layout
+
+Copyright John R. Bandela 2012
+Released under the Boost Sofware License
+
+Requires jrbjson from
+https://github.com/jbandela/JRBJson
+
+Requires Nana 0.3 C++11 edition
+
+from http://stdex.sourceforge.net/
+
+All classes are in namespace nana_jrb
+
+The main class is layout_engine
+
+To use, create a form just like always.
+
+Then you create layout_engine passing in the form
+
+	nana::gui::form f;
+	nana_jrb::layout_engine le(f);
+
+Then load the json layout file
+
+	std::ifstream fs("form.txt");
+	le.load(fs);
+	p
+The layout engine will handle resizing
+
+If you want to add an event for example a click event to a button you name "btn" in the layout file you can use the get_widget member function
+
+	le.get_widget("btn").make_event<nana::gui::events::click>([](){
+		nana::gui::API::exit();
+	});
+
+
+If you want to get a reference to a specific widget you can use the templated get member function
+
+	auto& list = le.get<nana::gui::listbox>();
+
+The format for the form.txt file
+
+This is a JSON file
+
+The toplevel object is the main grid
+
+Please see form.txt for an example JSON file
+
+Below are some fields explained
+
+COMMON FIELDS
+
+"name" - name of the grid or widget - used by get_grid/get_widget
+
+"type" - type of the grid or widget - can be "grid","button","label","checkbox","combox","date_chooser","frame","listbox","picture","progress","slider","textbox"
+
+"r" - tells what row to use - 0 based
+
+"c" - tells what column to use - 0 based
+
+"width" - tells the width in pixels. Use -1 to fill available space
+
+"height" - tells the height in pixels. Use -1 to fill available space
+
+"margin_left"/"margin_right","margin_top"/"margin_bottom" - gives the margin in pixels can be 0. Defaults to 0
+
+"column_span/row_span" - how many columns or rows the widget takes up - defaults to 1
+
+
+GRID FIELDS
+"row_def"/"column_defs" - A JSON array of integers. similar to XAML row and column defs. An array of integers - on for each row/column
+						 If the value is positive, such a 300 - then it gives the absolute size of the object
+						 If the value is negative, such as -1, then it is similar the Star sizing in XAML
+						 -1 is equivalent to 1*, -2 to 2* and so on
+						 Like star sizing, this divides up the remaining space proportianately. For example
+						 you have "row_defs":[100,-1,-6,-2] and the grid height is 1000
+						 the first row (Row 0) would have height 100
+						 The rest of the rows are "star" sizing rows.
+						 The remaining space is 900 (1000 - 100 for the first row)
+						 The remaining numbers total -9. Thus each -1 is equal to 900/9 = 100
+						 The second row is 100
+						 The third row is 600
+						 the fourth row is 200
+
+						 Let us say the grid then gets resized to 1900
+						 The first row is 100 since that is fixed
+						 The available size is 1800
+						 The remaining negative numbers are still -9
+						 The each -1 is now equal to 200
+						 The first row (Row 0) remains 100
+						 the second row is 200
+						 The third row is 1200
+						 The fourth row is 400
+
+"children" - An array of objects. The name and type of the objects are as specified above
+
+
+COMMON WIDGET FIELDS
+
+"caption" - a string that sets the caption
+
+"background"-  an array that specifies the background color in rgb. For example red is [255,0,0]
+
+"foreground" - foreground color
+
+"visible" - a boolean (true or false) that sets the visibility
+
+"enabled" - a boolean that sets whether the widget is enabled or not
+
+"typeface" - an object that specifies a font
+	{
+		"name" - the font name - string
+		"size" - the font size - integer
+		"bold"- boolean
+		"italic" - boolean
+		"underline" - boolean
+		"strike_out" - boolean
+
+		}
+
+		For example to set the typeface to Sans 12 bold you would write
+		"typeface":{"name":"Sans", "size": 12, "bold":true}
+
+
+SPECIFIC WIDGET FIELDS - see the nana documentation on what the field values do the field
+
+LABEL
+"format" - boolean - sets the format flag 
+"transparent" - boolean - sets the transparent flag
+
+BUTTON
+"enable_focus_color" - boolean - sets the corresponding flag
+"enabled_pushed" - boolean
+"omitted" - boolean
+"icon" - string - gives the filename of the icon to use for the button
+"image" - string - gives the filename of the image to use for the button
+
+CHECKBOX
+"transparent" - boolean - sets the transparent flag
+
+COMBOX
+"editable" - boolean
+"items" - array of strings. Adds to strings to the combox Example
+		"items":["First item","Second string","Third item"]
+
+DATE_CHOOSER - no further fields
+
+FRAME - no further fields
+
+LISTBOX
+"checkable" - boolean
+"show_header" - boolean
+"items" - same as items in COMBOX
+
+PICTURE
+"transparent" - boolean
+"image" - string - filename of the image
+
+PROGRESS
+"unknown"-boolean
+"amount" - integer for example "amount":100
+"value" - integer
+
+
+SLIDER
+"transparent" - boolean
+"vertical" - boolean
+"vmax" - integer
+"value"-integer
+
+TEXTBOX
+"multi_lines" -boolean
+"editable" - boolean
+"border" - boolean - true for border, false for no border
+"tip_string" - string- sets the tip string
+
+
+
+
+
+
+EXTENDING
+
+To add another type use the static function
+
+	layout_engine::add_type(std::string,std::function<std::unique_ptr<nana::gui::widget>(nana::gui::window)>)
+
+It takes a string telling the type (for example listbox, button, etc) and the creation function
+which is function/functor/lambda that takes a window returns an std::unique_ptr to a widget
+
+
+To add fields to your new type use 
+	layout_engine::add_property_processor( std::string type,std::function<void (nana::gui::widget&,jrb_json::value&)> f	
