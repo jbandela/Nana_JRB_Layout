@@ -26,7 +26,7 @@ Then load the json layout file
 
 	std::ifstream fs("form.txt");
 	le.load(fs);
-	p
+	
 The layout engine will handle resizing
 
 If you want to add an event for example a click event to a button you name "btn" in the layout file you can use the get_widget member function
@@ -71,6 +71,7 @@ COMMON FIELDS
 
 GRID FIELDS
 "row_def"/"column_defs" - A JSON array of integers. similar to XAML row and column defs. An array of integers - on for each row/column
+
 						 If the value is positive, such a 300 - then it gives the absolute size of the object
 						 If the value is negative, such as -1, then it is similar the Star sizing in XAML
 						 -1 is equivalent to 1*, -2 to 2* and so on
@@ -110,17 +111,18 @@ COMMON WIDGET FIELDS
 "enabled" - a boolean that sets whether the widget is enabled or not
 
 "typeface" - an object that specifies a font
-	{
+		
+		{
 		"name" - the font name - string
 		"size" - the font size - integer
 		"bold"- boolean
 		"italic" - boolean
 		"underline" - boolean
 		"strike_out" - boolean
-
 		}
 
-		For example to set the typeface to Sans 12 bold you would write
+	For example to set the typeface to Sans 12 bold you would write
+
 		"typeface":{"name":"Sans", "size": 12, "bold":true}
 
 
@@ -192,4 +194,5 @@ which is function/functor/lambda that takes a window returns an std::unique_ptr 
 
 
 To add fields to your new type use 
-	layout_engine::add_property_processor( std::string type,std::function<void (nana::gui::widget&,jrb_json::value&)> f	
+
+	layout_engine::add_property_processor( std::string type,std::function<void (nana::gui::widget&,jrb_json::value&)> f)
