@@ -410,14 +410,29 @@ std::map<std::string,std::function<void (nana::gui::widget&,jrb_json::value&)>>&
 			if(ot.count("show_header")){
 				listbox.show_header(v["show_header"].get<bool>());
 			}
+			int nheader = 0;
+			if(ot.count("headers")){
+				auto headers = v["headers"];
+				for(int i = 0; i < headers.size(); i++){
+					nana::string s = nana::charset(headers[i].get<std::string>());
+					listbox.append_header(s);
+					++nheader;
+				}
+			}
+
 			if(ot.count("items")){
 				auto items = v["items"];
 				for(int i = 0; i < items.size(); i++){
 					nana::string s = nana::charset(items[i].get<std::string>());
 					listbox.append_item(s);
 				}
-			}
 
+				// In nana, in that if there are no headers, the items will not show.
+				// So if no headers already then add  blank header
+				if(nheader==0){
+					listbox.append_header(nana::string());
+				}
+			}
 
 
 		};

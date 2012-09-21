@@ -26,7 +26,7 @@ Then load the json layout file
 
 	std::ifstream fs("form.txt");
 	le.load(fs);
-	p
+	
 The layout engine will handle resizing
 
 If you want to add an event for example a click event to a button you name "btn" in the layout file you can use the get_widget member function
@@ -71,28 +71,30 @@ COMMON FIELDS
 
 GRID FIELDS
 "row_def"/"column_defs" - A JSON array of integers. similar to XAML row and column defs. An array of integers - on for each row/column
-						 If the value is positive, such a 300 - then it gives the absolute size of the object
-						 If the value is negative, such as -1, then it is similar the Star sizing in XAML
-						 -1 is equivalent to 1*, -2 to 2* and so on
-						 Like star sizing, this divides up the remaining space proportianately. For example
-						 you have "row_defs":[100,-1,-6,-2] and the grid height is 1000
-						 the first row (Row 0) would have height 100
-						 The rest of the rows are "star" sizing rows.
-						 The remaining space is 900 (1000 - 100 for the first row)
-						 The remaining numbers total -9. Thus each -1 is equal to 900/9 = 100
-						 The second row is 100
-						 The third row is 600
-						 the fourth row is 200
 
-						 Let us say the grid then gets resized to 1900
-						 The first row is 100 since that is fixed
-						 The available size is 1800
-						 The remaining negative numbers are still -9
-						 The each -1 is now equal to 200
-						 The first row (Row 0) remains 100
-						 the second row is 200
-						 The third row is 1200
-						 The fourth row is 400
+	If the value is positive, such a 300 - then it gives the absolute size of the object
+	If the value is negative, such as -1, then it is similar the Star sizing in XAML
+	-1 is equivalent to 1*, -2 to 2* and so on
+	Like star sizing, this divides up the remaining space proportianately. 
+
+	For example you have "row_defs":[100,-1,-6,-2] and the grid height is 1000
+	the first row (Row 0) would have height 100
+	The rest of the rows are "star" sizing rows.
+	The remaining space is 900 (1000 - 100 for the first row)
+	The remaining numbers total -9. Thus each -1 is equal to 900/9 = 100
+	The second row is 100
+	The third row is 600
+	the fourth row is 200
+
+	Let us say the grid then gets resized to 1900
+	The first row is 100 since that is fixed
+	The available size is 1800
+	The remaining negative numbers are still -9
+	The each -1 is now equal to 200
+	The first row (Row 0) remains 100
+	The second row is 200
+	The third row is 1200
+	The fourth row is 400
 
 "children" - An array of objects. The name and type of the objects are as specified above
 
@@ -110,17 +112,18 @@ COMMON WIDGET FIELDS
 "enabled" - a boolean that sets whether the widget is enabled or not
 
 "typeface" - an object that specifies a font
-	{
+		
+		{
 		"name" - the font name - string
 		"size" - the font size - integer
 		"bold"- boolean
 		"italic" - boolean
 		"underline" - boolean
 		"strike_out" - boolean
-
 		}
 
-		For example to set the typeface to Sans 12 bold you would write
+	For example to set the typeface to Sans 12 bold you would write
+
 		"typeface":{"name":"Sans", "size": 12, "bold":true}
 
 
@@ -153,6 +156,7 @@ LISTBOX
 "checkable" - boolean
 "show_header" - boolean
 "items" - same as items in COMBOX
+"headers" - array of strings for headers
 
 PICTURE
 "transparent" - boolean
@@ -192,4 +196,5 @@ which is function/functor/lambda that takes a window returns an std::unique_ptr 
 
 
 To add fields to your new type use 
-	layout_engine::add_property_processor( std::string type,std::function<void (nana::gui::widget&,jrb_json::value&)> f	
+
+	layout_engine::add_property_processor( std::string type,std::function<void (nana::gui::widget&,jrb_json::value&)> f)

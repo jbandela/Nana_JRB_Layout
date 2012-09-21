@@ -24,6 +24,17 @@
 
 	},
 	{
+		"name":"list",
+		"type":"listbox",
+		"r":0,
+		"c":0,
+		"row_span":3,
+		"checkable":true,
+		"items":["JRB","Test","Nana","C++"],
+		"show_header":false
+
+	},
+	{
 		"name":"progress1",
 		"type":"progress",
 		"r":2,

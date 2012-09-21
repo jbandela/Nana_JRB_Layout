@@ -7,7 +7,7 @@ Released under the Boost Sofware License
 Requires jrbjson from
 https://github.com/jbandela/JRBJson
 
-Requires Nana 0.3 C++11 edition
+Requires Nana 0.3.1 C++11 edition
 
 from http://stdex.sourceforge.net/
 

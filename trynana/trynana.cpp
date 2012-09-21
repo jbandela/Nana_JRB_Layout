@@ -3,6 +3,7 @@
 
 #include "nana_jrb_layout.h"
 #include "nana_jrb_layout_from_file.h"
+#include <nana/gui/widgets/listbox.hpp>
 #include <fstream>
 
 
