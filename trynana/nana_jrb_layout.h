@@ -76,7 +76,7 @@ namespace nana_jrb{
 		std::vector<int>& column_defs(){return column_defs_;}
 
 
-		grid():width_(0),height_(0),x_(0),y_(0){}
+		grid(nana::gui::widget& parent);
 
 		void add_widget(nana::gui::widget& w,widget_dimensions wd){
 			widgets_[&w] = wd;
@@ -84,6 +84,8 @@ namespace nana_jrb{
 		void add_grid(grid& g,widget_dimensions wd){
 			child_grids_[&g] = wd;
 		}
+
+
 
 		void x(int i){x_ = i;}
 		int x(){return x_;}
@@ -106,7 +108,17 @@ namespace nana_jrb{
 
 		int height(){return height_;}
 
+		void min_width(int i);
+
+		int min_width(){return min_width_;}
+
+		void min_height(int i);
+
+		int min_height(){return min_height_;}
+
 		void update_layout();
+
+		nana::gui::widget& base_window(){return *base_window_;}
 
 
 	private: 
@@ -115,16 +127,49 @@ namespace nana_jrb{
 		int y_;
 		int width_;
 		int height_;
+		int min_height_;
+		int min_width_;
 
 
 		int get_row_height(int r,int star);
 		int get_column_width(int c,int star);
+
+		int get_effective_width(){
+			if(min_width_ == 0 || min_width_ < width_){
+				return width_;
+			}
+			else{
+				return min_width_;
+			}
+		}
+
+		int get_effective_height(){
+			if(min_height_ == 0 || min_height_ < height_){
+				return height_;
+			}
+			else{
+				return min_height_;
+			}
+		}
+
+		int get_starting_y();
+
+		int get_starting_x();
 
 		std::pair<int,int> get_row_y_height(int r);
 		std::pair<int,int> get_column_x_width(int c);
 
 		int get_column_star();
 		int get_row_star();
+
+		void add_scroll_to_grid_if_needed();
+
+		void remove_scroll_from_grid();
+
+		std::shared_ptr<nana::gui::widget> base_window_;
+		std::shared_ptr<nana::gui::widget> v_scroll_;
+		std::shared_ptr<nana::gui::widget> h_scroll_;
+
 
 
 	};

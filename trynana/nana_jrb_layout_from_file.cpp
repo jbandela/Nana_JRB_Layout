@@ -28,10 +28,10 @@ namespace{
 		void handle_widget(jrb_json::value& v){
 			std::string type = v[std::string("type")].get<std::string>();
 			std::string name = v[std::string("name")].get<std::string>();
-			le->add_widget(name,type);
-			auto& w = le->get_widget(name);
 			auto& g = le->get_grid(grid_stack.top());
 
+			le->add_widget(name,type,g.base_window());
+			auto& w = le->get_widget(name);
 			jrb_json::object_type& ot = v.get_exact<jrb_json::object_type>();
 
 			nana_jrb::widget_dimensions wd;
@@ -181,7 +181,17 @@ namespace{
 			// set the root grid
 			le->set_root_grid_if_not_set(name);
 
-			le->add_grid(name,nana_jrb::grid());
+			nana::gui::widget* parent = nullptr;
+
+			if(grid_stack.size()){
+				parent = &le->get_grid(grid_stack.top()).base_window();
+			}
+			else{
+				parent = &le->get_form();
+			}
+
+
+			le->add_grid(name,nana_jrb::grid(*parent));
 			auto& g = le->get_grid(name);
 			std::string prev_grid;
 			if(grid_stack.size()){
@@ -220,6 +230,14 @@ namespace{
 			if(ot.count("height")){
 				jrb_json::value& height = v["height"];
 				g.height(height.get<int>());
+			}
+			if(ot.count("min_width")){
+				jrb_json::value& min_width = v["min_width"];
+				g.min_width(min_width.get<int>());
+			}
+			if(ot.count("min_height")){
+				jrb_json::value& min_height = v["min_height"];
+				g.min_height(min_height.get<int>());
 			}
 			// widget dimensions
 			nana_jrb::widget_dimensions wd;

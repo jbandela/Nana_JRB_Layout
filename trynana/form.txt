@@ -3,6 +3,9 @@
 "type":"grid",
 "row_defs":[-1,-1,-1],
 "column_defs":[-1,-1,-1],
+"min_height":500,
+"min_width":500,
+
 
 "children":[
 	{
@@ -31,7 +34,8 @@
 		"row_span":3,
 		"checkable":true,
 		"items":["JRB","Test","Nana","C++"],
-		"show_header":false
+		"show_header":false,
+		"visible":true
 
 	},
 	{
@@ -51,6 +55,9 @@
 		"column_defs":[-1,-1,-1],
 		"r":1,
 		"c":1,
+		"min_height":200,
+		"min_width":200,
+
 		"children":[
 			{
 				"name":"btn",

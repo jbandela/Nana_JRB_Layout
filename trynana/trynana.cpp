@@ -4,6 +4,7 @@
 #include "nana_jrb_layout.h"
 #include "nana_jrb_layout_from_file.h"
 #include <nana/gui/widgets/listbox.hpp>
+#include <nana/gui/widgets/panel.hpp>
 #include <fstream>
 
 
@@ -28,6 +29,16 @@ int main()
 	le.get_widget("btn").make_event<nana::gui::events::click>([](){
 		nana::gui::API::exit();
 	});
+
+	nana::gui::panel<false> p(form);
+	p.size(200,200);
+	p.move(50,50);
+	nana::gui::listbox list(p);
+	list.size(100,100);
+	list.append_header(L"hello");
+	list.move(-10,10);
+	p.hide();
+
 
 	form.show();
 	nana::gui::exec();

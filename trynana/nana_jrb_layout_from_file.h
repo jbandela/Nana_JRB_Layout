@@ -34,22 +34,34 @@ namespace nana_jrb{
 		void set_root_grid_if_not_set(std::string s){if(root_grid_.size()==0)root_grid_ = s;}
 
 		static void add_property_processor(std::string type,std::function<void (nana::gui::widget&,jrb_json::value&)> f);
-		void add_widget(std::string name, std::string type){
-			widgets_[name] = std::move(type_factory()[type](*f_));
+		void add_widget(std::string name, std::string type,nana::gui::window parent){
+			widgets_[name] = std::move(type_factory()[type](parent));
 		}
 		void add_grid(std::string s,const grid& g){
-			grids_[s] = g;
+			grids_.insert(std::make_pair(s,g));
 		}
-		grid& get_grid(std::string s){return grids_[s];}
+		grid& get_grid(std::string s){
+			auto iter = grids_.find(s);
+			if(iter==grids_.end()){
+				std::string err = "Unable to find grid:" + s;
+				throw std::runtime_error(err);
+			}
+			return iter->second;
+		
+		}
 		nana::gui::widget& get_widget(std::string s){return *widgets_[s];}
 		template<class Widget_Type>
 		Widget_Type& get(std::string s){
 			
 			Widget_Type* w =  dynamic_cast<Widget_Type*>(widgets_[s].get());
-			if(!w)throw std::runtime_error("Incorrect Widget Type");
+			if(!w){
+				std::string err = "Incorrect widget type:" + s;
+				throw std::runtime_error(err);
+			}
 			return *w;
 		}
 
+		nana::gui::form& get_form(){return *f_;}
 		static std::map<std::string,std::function<std::unique_ptr<nana::gui::widget>(nana::gui::window)>>& type_factory();
 		static std::map<std::string,std::function<void (nana::gui::widget&,jrb_json::value&)>>&  property_processor();
 	};

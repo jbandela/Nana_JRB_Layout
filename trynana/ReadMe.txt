@@ -7,7 +7,7 @@ Released under the Boost Sofware License
 Requires jrbjson from
 https://github.com/jbandela/JRBJson
 
-Requires Nana 0.3 C++11 edition
+Requires Nana 0.3.1 C++11 edition
 
 from http://stdex.sourceforge.net/
 
@@ -50,26 +50,26 @@ Please see form.txt for an example JSON file
 
 Below are some fields explained
 
+SCROLLING
+
+You can scroll any grid you have. To enable scrolling, set min_width, or min_height to a number greater than 0. 
+If the width < min_width, horizontal scrollbars will appear
+if the height < min_height, vertical scrollbars will appear
+
 COMMON FIELDS
 
 "name" - name of the grid or widget - used by get_grid/get_widget
-
 "type" - type of the grid or widget - can be "grid","button","label","checkbox","combox","date_chooser","frame","listbox","picture","progress","slider","textbox"
-
 "r" - tells what row to use - 0 based
-
 "c" - tells what column to use - 0 based
-
 "width" - tells the width in pixels. Use -1 to fill available space
-
 "height" - tells the height in pixels. Use -1 to fill available space
-
 "margin_left"/"margin_right","margin_top"/"margin_bottom" - gives the margin in pixels can be 0. Defaults to 0
-
 "column_span/row_span" - how many columns or rows the widget takes up - defaults to 1
 
 
 GRID FIELDS
+
 "row_def"/"column_defs" - A JSON array of integers. similar to XAML row and column defs. An array of integers - on for each row/column
 
 	If the value is positive, such a 300 - then it gives the absolute size of the object
@@ -97,20 +97,18 @@ GRID FIELDS
 	The fourth row is 400
 
 "children" - An array of objects. The name and type of the objects are as specified above
+"min_width" - integer - minimum width of the grid, if grid width is less than min_width horizontal scrollbars will appear. see SCROLLING above
+"min_height" - integer - 
+
 
 
 COMMON WIDGET FIELDS
 
 "caption" - a string that sets the caption
-
 "background"-  an array that specifies the background color in rgb. For example red is [255,0,0]
-
 "foreground" - foreground color
-
 "visible" - a boolean (true or false) that sets the visibility
-
 "enabled" - a boolean that sets whether the widget is enabled or not
-
 "typeface" - an object that specifies a font
 		
 		{
@@ -130,10 +128,12 @@ COMMON WIDGET FIELDS
 SPECIFIC WIDGET FIELDS - see the nana documentation on what the field values do the field
 
 LABEL
+
 "format" - boolean - sets the format flag 
 "transparent" - boolean - sets the transparent flag
 
 BUTTON
+
 "enable_focus_color" - boolean - sets the corresponding flag
 "enabled_pushed" - boolean
 "omitted" - boolean
@@ -141,9 +141,11 @@ BUTTON
 "image" - string - gives the filename of the image to use for the button
 
 CHECKBOX
+
 "transparent" - boolean - sets the transparent flag
 
 COMBOX
+
 "editable" - boolean
 "items" - array of strings. Adds to strings to the combox Example
 		"items":["First item","Second string","Third item"]
@@ -153,28 +155,32 @@ DATE_CHOOSER - no further fields
 FRAME - no further fields
 
 LISTBOX
+
 "checkable" - boolean
 "show_header" - boolean
 "items" - same as items in COMBOX
-"headers" - array of strings for headers
 
 PICTURE
+
 "transparent" - boolean
 "image" - string - filename of the image
 
 PROGRESS
+
 "unknown"-boolean
 "amount" - integer for example "amount":100
 "value" - integer
 
 
 SLIDER
+
 "transparent" - boolean
 "vertical" - boolean
 "vmax" - integer
 "value"-integer
 
 TEXTBOX
+
 "multi_lines" -boolean
 "editable" - boolean
 "border" - boolean - true for border, false for no border
