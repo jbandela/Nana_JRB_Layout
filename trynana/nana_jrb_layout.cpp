@@ -83,8 +83,6 @@ void nana_jrb::grid::update_layout()
 		p.first->update_layout();
 	}
 
-	remove_scroll_from_grid();
-	//nana::gui::API::refresh_window(base_window());
 }
 
 int nana_jrb::grid::get_row_height( int r,int star )
@@ -284,18 +282,6 @@ void nana_jrb::grid::add_scroll_to_grid_if_needed()
 
 }
 
-void nana_jrb::grid::remove_scroll_from_grid()
-{
-	//if(min_width() && min_width() > width()){
-	//	// remove a horizontal scroll bar
-	//	// remove a row for the scroll bar to be in - width 20
-	//	row_defs_.pop_back();
-	//	widgets_.erase(h_scroll_.get());
-
-
-	//}
-
-}
 
 int nana_jrb::grid::get_starting_y()
 {

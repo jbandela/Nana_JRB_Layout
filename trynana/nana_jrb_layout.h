@@ -164,7 +164,6 @@ namespace nana_jrb{
 
 		void add_scroll_to_grid_if_needed();
 
-		void remove_scroll_from_grid();
 
 		std::shared_ptr<nana::gui::widget> base_window_;
 		std::shared_ptr<nana::gui::widget> v_scroll_;
